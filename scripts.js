@@ -1,18 +1,37 @@
-/**
- * Sýnilausn á verkefni 8 í Vefforritun 1, 2024.
- * Byggir á sýnilausn á verkefni 7.
- * Notar jsdoc til að skrifa lýsingu á föllum, inntaki og úttaki.
- * Kveikið á `Check JS` í Visual Studio Code til að sjá mögulegar villur.
- * Notar `console.assert` til að athuga hvort föll virki rétt.
- */
+import { longest } from './modules/longest.js';
+import { shortest } from './modules/shortest.js';
+import { reverse } from './modules/reverse.js';
+import { vowels } from './modules/vowels.js';
+import { consonants } from './modules/consonants.js';
+import { palindrome } from './modules/palindrome.js';
 
-import { isString, splitOnWhitespace } from './lib/helpers.js';
+const form = document.querySelector('.string-form');
+const outputDiv = document.querySelector('.output');
+const inputField = document.getElementById('string');
+const inputText = outputDiv.querySelector('.input');
+const longestWord = outputDiv.querySelector('.longest');
+const shortestWord = outputDiv.querySelector('.shortest');
+const vowelsCount = outputDiv.querySelector('.vowels');
+const consonantsCount = outputDiv.querySelector('.consonants');
+const palindromeResult = outputDiv.querySelector('.palindrome');
+const reversedString = outputDiv.querySelector('.reversed');
 
-const test = isString('hæ');
-console.log('test er strengur?', test);
+function analyzeString() {
+  const str = inputField.value;
+  inputText.textContent = str;
+  longestWord.textContent = longest(str);
+  shortestWord.textContent = shortest(str);
+  vowelsCount.textContent = vowels(str);
+  consonantsCount.textContent = consonants(str);
+  palindromeResult.textContent = palindrome(str) ? 'er samhverfur' : 'ekki samhverfur';
+  reversedString.textContent = reverse(str);
+  outputDiv.classList.remove('hidden');
+}
 
-const stringWithWhitespace = `halló
-\theimur
-hæ`;
-const split = splitOnWhitespace(stringWithWhitespace);
-console.log(split);
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  analyzeString();
+});
+
+// Optional: update on keyup
+inputField.addEventListener('keyup', analyzeString);
